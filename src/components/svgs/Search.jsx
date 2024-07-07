@@ -5,6 +5,7 @@ export function SearchIcon({ className = "" }) {
       height="27"
       viewBox="0 0 27 27"
       fill="none"
+      className={className}
       xmlns="http://www.w3.org/2000/svg"
     >
       <path

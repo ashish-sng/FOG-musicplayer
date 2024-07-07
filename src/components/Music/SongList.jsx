@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SongItem from "./SongItem";
-import useSongContext from "../../hooks/useSongContext";
 
 const SongList = ({ songs, onSongReorder }) => {
   const [draggedSong, setDraggedSong] = useState(null);
@@ -26,8 +25,8 @@ const SongList = ({ songs, onSongReorder }) => {
   };
 
   return (
-    <ul className="song-list">
-      <li className="grid grid-cols-6 gap-4 items-center font-bold py-2 px-4 bg-gray-100">
+    <ul className="bg-yellow-400">
+      <li className="grid grid-cols-6 gap-4 items-center font-bold py-2 px-4 bg-transparent">
         <div className="col-span-1">#</div>
         <div className="col-span-2">title</div>
         <div className="col-span-1">playing</div>

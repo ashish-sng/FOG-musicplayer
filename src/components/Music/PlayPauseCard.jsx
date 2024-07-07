@@ -105,7 +105,6 @@ const ButtonControls = () => {
     return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
   };
 
-  // Debugging logs
   useEffect(() => {
     console.log("Current Time:", currentTime);
     console.log("Current Song Duration:", currentSong?.duration);
@@ -113,8 +112,8 @@ const ButtonControls = () => {
   }, [currentTime, currentSong]);
 
   return (
-    <div className="flex flex-col gap-2 items-center">
-      <div className="flex text-white items-center gap-5">
+    <div className="flex flex-col font-poppins gap-2 items-center">
+      <div className="flex text-white items-center gap-2">
         <p>{formatTime(currentTime)}</p>
         <div className="w-[25vw] max-w-[150px] bg-gray-300 rounded-full cursor-pointer">
           <div

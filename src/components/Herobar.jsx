@@ -3,7 +3,7 @@ import ArtistBanner from "./svgs/Artist";
 
 const Herobar = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-96 bg-gradient-to-r from-red-500 to-gray-800">
+    <div className="flex flex-col items-center justify-center max-h-[400px] h-[350px] bg-transparent">
       <ArtistBanner />
     </div>
   );

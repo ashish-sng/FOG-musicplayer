@@ -1,41 +1,48 @@
-import { DiscoverIcon } from "../components/svgs/DiscoverIcon";
-import { HomeIcon } from "../components/svgs/HomeIcon";
-import { LibraryIcon } from "../components/svgs/LibraryIcon";
-import { LogoutIcon } from "../components/svgs/Logout";
-import { SettingsIcon } from "../components/svgs/Settings";
-import { TrendIcon } from "../components/svgs/TrendIcon";
+import DiscoverIcon from "../components/svgs/DiscoverIcon";
+import HomeIcon from "../components/svgs/HomeIcon";
+import LibraryIcon from "../components/svgs/LibraryIcon";
+import LogoutIcon from "../components/svgs/Logout";
+import SettingsIcon from "../components/svgs/Settings";
+import TrendIcon from "../components/svgs/TrendIcon";
 import BilleJean from "./audio/BillieJean.mp3";
 import BeatIt from "./audio/BeatIt.mp3";
 import DontStop from "./audio/DontStoptilYouGetEnough.mp3";
 import RockWithYou from "./audio/RockWithYou.mp3";
 import SmoothCriminal from "./audio/SmoothCriminal.mp3";
 
+export const HEADERS = [
+  { title: "Music" },
+  { title: "Podcast" },
+  { title: "Live" },
+  { title: "Radio" },
+];
+
 export const MENU = [
   {
-    icon: <HomeIcon className="h-8 w-8" />,
+    icon: <HomeIcon className="h-6 w-6" />,
     title: "Home",
   },
   {
-    icon: <TrendIcon className="h-8 w-8" />,
+    icon: <TrendIcon className="h-6 w-6" />,
     title: "Trends",
   },
   {
-    icon: <LibraryIcon className="h-8 w-8" />,
+    icon: <LibraryIcon className="h-6 w-6" />,
     title: "Library",
   },
   {
-    icon: <DiscoverIcon className="h-8 w-8" />,
+    icon: <DiscoverIcon className="h-6 w-6" />,
     title: "Discover",
   },
 ];
 
 export const GENERAL = [
   {
-    icon: <SettingsIcon className="h-8 w-8" />,
+    icon: <SettingsIcon className="h-6 w-6" />,
     title: "Settings",
   },
   {
-    icon: <LogoutIcon className="h-8 w-8" />,
+    icon: <LogoutIcon className="h-6 w-6" />,
     title: "Logout",
   },
 ];

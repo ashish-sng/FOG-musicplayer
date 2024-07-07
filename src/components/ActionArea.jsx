@@ -7,12 +7,20 @@ const ActionArea = () => {
   const { currentSong, songs, setPlaying, playing } = useSongContext();
 
   return (
-    <div className="flex flex-col justify-end bg-yellow-400">
-      <div className="flex p-2 m-2 rounded-lg border-black bg-[#6B0000] py-4 flex-col items-center justify-evenly gap-4">
-        <span className="text-white font-semibold">Now playing</span>
-        <ActionArtist />
-        <span className="text-white font-semibold">{currentSong.title}</span>
-        <span className="text-white font-semibold">{currentSong.artist}</span>
+    <div className="flex flex-col justify-end bg-custom-gradient">
+      <div className="flex m-2 rounded-lg max-w-72 max-h-96 border-none bg-[#6B0000] py-4 px-4 flex-col items-center justify-evenly gap-1">
+        <span className="text-white text-base font-semibold font-poppins">
+          Now playing
+        </span>
+        <ActionArtist className="h-40 w-56" />
+        <div className="flex flex-col gap-1">
+          <span className="text-white font-semibold font-poppins text-lg">
+            {currentSong.title}
+          </span>
+          <span className="text-white font-normal text-xs">
+            {currentSong.artist}
+          </span>
+        </div>
         <ButtonControls />
       </div>
     </div>

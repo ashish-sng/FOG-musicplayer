@@ -13,6 +13,7 @@ const SongList = ({ songs, onSongReorder }) => {
   };
 
   const handleDrop = (e, targetSong) => {
+    e.preventDefault();
     if (draggedSong && draggedSong !== targetSong) {
       const newSongs = [...songs];
       const draggedSongIndex = songs.indexOf(draggedSong);
@@ -25,23 +26,26 @@ const SongList = ({ songs, onSongReorder }) => {
   };
 
   return (
-    <ul className="bg-yellow-400">
-      <li className="grid grid-cols-6 gap-4 items-center font-bold py-2 px-4 bg-transparent">
+    <ul className="bg-transparent">
+      {/* Header row */}
+      <li className="grid grid-cols-12 gap-4 items-start justify-start text-[#CFC5C5] font-bold text-lg font-poppins py-2 px-4 bg-transparent">
         <div className="col-span-1">#</div>
-        <div className="col-span-2">title</div>
-        <div className="col-span-1">playing</div>
-        <div className="col-span-1">duration</div>
-        <div className="col-span-1">album</div>
+        <div className="col-span-4">TITLE</div>
+        <div className="col-span-2">PLAYING</div>
+        <div className="col-span-2">DURATION</div>
+        <div className="col-span-3">ALBUM</div>
       </li>
+
+      {/* Songs list */}
       {songs.map((song, index) => (
         <li
+          key={song.title}
           draggable
           onDragStart={(e) => handleDragStart(e, song)}
           onDragOver={handleDragOver}
           onDrop={(e) => handleDrop(e, song)}
-          key={song.title}
         >
-          <SongItem {...song} />
+          <SongItem {...song} index={index} />
         </li>
       ))}
     </ul>

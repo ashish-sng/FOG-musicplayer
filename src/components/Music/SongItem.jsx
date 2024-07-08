@@ -1,5 +1,4 @@
 import useSongContext from "../../hooks/useSongContext";
-import Logo from "../svgs/Logo";
 import Playing from "../svgs/Playing";
 
 const SongItem = ({

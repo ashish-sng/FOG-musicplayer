@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import useSongContext from "../../hooks/useSongContext";
-import { Howl, Howler } from "howler";
+import { Howl } from "howler";
 import LoopButton from "../svgs/Loop";
 import BackButton from "../svgs/Back";
 import PlayButton from "../svgs/Play";

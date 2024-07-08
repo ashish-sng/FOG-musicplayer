@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import useSongContext from "../../hooks/useSongContext";
 import { Howl, Howler } from "howler";
 import LoopButton from "../svgs/Loop";
@@ -7,65 +7,87 @@ import PlayButton from "../svgs/Play";
 import NextButton from "../svgs/Next";
 import PauseButton from "../svgs/Pause";
 import ShuffleButton from "../svgs/Shuffle";
+import SingleLoop from "../svgs/Loop1";
 
 const ButtonControls = () => {
-  const { currentSong, songs, setPlaying, setCurrentSong, playing } =
+  const { currentSong, songs, setPlaying, setCurrentSong, playing, setSongs } =
     useSongContext();
-  const [sound, setSound] = useState(null);
+  const soundRef = useRef(null);
   const [currentTime, setCurrentTime] = useState(0);
+  const [loop, setLoop] = useState("none");
 
   useEffect(() => {
-    if (sound) {
-      sound.unload();
+    if (soundRef.current) {
+      soundRef.current.unload();
     }
     if (currentSong) {
-      const newSound = new Howl({ src: [currentSong.url] });
-      setSound(newSound);
+      const newSound = new Howl({
+        src: [currentSong.url],
+        loop: loop === "single",
+      });
+      soundRef.current = newSound;
       if (playing) {
         newSound.play();
+        newSound.seek(currentTime);
       }
-      newSound.on("end", () => setPlaying(false));
+      newSound.on("end", handleSongEnd);
     }
-    console.log("Current Song:", sound);
-  }, [currentSong]);
+  }, [currentSong, loop]);
 
   useEffect(() => {
-    if (sound) {
+    if (soundRef.current) {
       if (playing) {
-        sound.play();
+        soundRef.current.play();
       } else {
-        sound.pause();
+        soundRef.current.pause();
       }
     }
   }, [playing]);
 
   useEffect(() => {
     let interval;
-    if (sound && playing) {
+    if (soundRef.current && playing) {
       interval = setInterval(() => {
-        setCurrentTime(Math.floor(sound.seek()));
+        setCurrentTime(Math.floor(soundRef.current.seek()));
       }, 1000);
     } else if (interval) {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [sound, playing]);
+  }, [soundRef.current, playing]);
 
   const handlePlayPauseSong = () => {
     if (playing) {
-      sound.pause();
+      soundRef.current.pause();
     } else {
-      sound.play();
+      soundRef.current.play();
     }
     setPlaying(!playing);
   };
 
   const handleLoop = () => {
-    console.log("Loop button clicked!");
+    if (loop === "none") {
+      setLoop("single");
+    } else if (loop === "single") {
+      setLoop("playlist");
+    } else {
+      setLoop("none");
+    }
+  };
+
+  const handleSongEnd = () => {
+    if (loop === "single") {
+      soundRef.current.seek(0);
+      soundRef.current.play();
+      setPlaying(true);
+    } else if (loop === "playlist") {
+      handleNext();
+    } else {
+      setPlaying(false);
+    }
   };
 
   const handleBack = () => {
-    console.log("Back button clicked!");
     const currentIndex = songs.findIndex(
       (song) => song.title === currentSong.title
     );
@@ -77,7 +99,6 @@ const ButtonControls = () => {
   };
 
   const handleNext = () => {
-    console.log("Next button clicked!");
     const currentIndex = songs.findIndex(
       (song) => song.title === currentSong.title
     );
@@ -89,14 +110,31 @@ const ButtonControls = () => {
   };
 
   const handleShuffle = () => {
-    console.log("Shuffle button clicked!");
+    if (songs.length < 2) {
+      return; // No need to shuffle if there's only one song
+    }
+
+    const shuffledSongs = [...songs];
+    for (let i = shuffledSongs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledSongs[i], shuffledSongs[j]] = [
+        shuffledSongs[j],
+        shuffledSongs[i],
+      ];
+    }
+
+    setPlaying(false);
+    setCurrentTime(0);
+    setCurrentSong(shuffledSongs[0]);
+    setSongs(shuffledSongs);
+    setPlaying(true);
   };
 
   const getProgressPercentage = () => {
-    if (!currentSong || !sound) {
+    if (!currentSong || !soundRef.current) {
       return 0;
     }
-    return (currentTime / sound._duration) * 100;
+    return (currentTime / soundRef.current.duration()) * 100;
   };
 
   const formatTime = (seconds) => {
@@ -105,38 +143,50 @@ const ButtonControls = () => {
     return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
   };
 
-  useEffect(() => {
-    console.log("Current Time:", currentTime);
-    console.log("Current Song Duration:", currentSong?.duration);
-    console.log("Progress Percentage:", getProgressPercentage());
-  }, [currentTime, currentSong]);
+  const handleProgressBarChange = (e) => {
+    if (!soundRef.current) return;
+    const newTime = (e.target.value / 100) * soundRef.current.duration();
+    soundRef.current.seek(newTime);
+    setCurrentTime(newTime);
+  };
 
   return (
     <div className="flex flex-col font-poppins gap-2 items-center">
       <div className="flex text-white items-center gap-2">
         <p>{formatTime(currentTime)}</p>
-        <div className="w-[25vw] max-w-[150px] bg-gray-300 rounded-full cursor-pointer">
-          <div
-            style={{ width: `${getProgressPercentage()}%` }}
-            className="h-1 bg-red-600 rounded-full"
-          />
-        </div>
-        <p>{formatTime(sound?._duration || 0)}</p>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value={getProgressPercentage()}
+          onChange={handleProgressBarChange}
+          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+          style={{
+            background: `linear-gradient(to right, #f00 ${getProgressPercentage()}%, #ccc 0%)`,
+          }}
+        />
+        <p>{currentSong?.duration}</p>
       </div>
       <div className="flex flex-row justify-between w-full text-white px-2">
-        <button className="" onClick={handleLoop}>
-          <LoopButton />
+        <button onClick={handleLoop}>
+          {loop === "none" ? (
+            <LoopButton className="opacity-70" />
+          ) : loop === "single" ? (
+            <SingleLoop />
+          ) : (
+            <LoopButton />
+          )}
         </button>
-        <button className="" onClick={handleBack}>
+        <button onClick={handleBack}>
           <BackButton />
         </button>
-        <button className="" onClick={handlePlayPauseSong}>
+        <button onClick={handlePlayPauseSong}>
           {playing ? <PauseButton /> : <PlayButton />}
         </button>
-        <button className="" onClick={handleNext}>
+        <button onClick={handleNext}>
           <NextButton />
         </button>
-        <button className="" onClick={handleShuffle}>
+        <button onClick={handleShuffle}>
           <ShuffleButton />
         </button>
       </div>

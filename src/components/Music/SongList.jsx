@@ -26,13 +26,13 @@ const SongList = ({ songs, onSongReorder }) => {
   };
 
   return (
-    <ul className="bg-transparent">
+    <ul className="bg-transparent px-6">
       {/* Header row */}
-      <li className="grid grid-cols-12 gap-4 items-start justify-start text-[#CFC5C5] font-bold text-lg font-poppins py-2 px-4 bg-transparent">
+      <li className="grid grid-cols-10 gap-4 items-start justify-start text-[#CFC5C5] font-bold text-medium font-poppins py-2 px-4 bg-transparent">
         <div className="col-span-1">#</div>
-        <div className="col-span-4">TITLE</div>
-        <div className="col-span-2">PLAYING</div>
-        <div className="col-span-2">DURATION</div>
+        <div className="col-span-3">TITLE</div>
+        <div className="col-span-2 hidden md:block">PLAYING</div>
+        <div className="col-span-1 hidden md:block">TIME</div>
         <div className="col-span-3">ALBUM</div>
       </li>
 

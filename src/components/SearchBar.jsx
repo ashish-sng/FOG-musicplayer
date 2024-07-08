@@ -3,7 +3,7 @@ import { SearchIcon } from "./svgs/Search";
 
 const SearchBar = () => {
   return (
-    <div className="flex justify-between items-center border-none w-96 px-4 font-poppins font-normal text-lg py-2 border bg-[#2C0000] rounded-full">
+    <div className="flex justify-between w-full items-center border-none px-4 mr-5 font-poppins font-normal text-lg py-2 border bg-[#2C0000] rounded-full">
       <input
         type="text"
         value="Michael Jackson"

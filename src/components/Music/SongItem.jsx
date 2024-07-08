@@ -1,4 +1,6 @@
 import useSongContext from "../../hooks/useSongContext";
+import Logo from "../svgs/Logo";
+import Playing from "../svgs/Playing";
 
 const SongItem = ({
   title,
@@ -10,32 +12,39 @@ const SongItem = ({
   url,
   imageURL,
 }) => {
-  const { currentSong, setCurrentSong } = useSongContext();
+  const { currentSong, setCurrentSong, setPlaying } = useSongContext();
 
   const isActive = currentSong.title === title;
 
-  const containerClasses = `grid grid-cols-12 gap-4 items-center justify-center font-poppins text-lg py-1 px-4 border-none ${
+  const containerClasses = `grid grid-cols-10 gap-4 items-center justify-center font-poppins text-medium py-1 px-4 border-none ${
     isActive
       ? "bg-[#520000] text-white font-bold"
       : "text-[#CFC5C5] font-medium"
   }`;
+
+  const handleSongChange = () => {
+    setCurrentSong({ title, artist, album, duration, playing, url });
+    setPlaying(true);
+  };
+
   return (
-    <div
-      onClick={() =>
-        setCurrentSong({ title, artist, album, duration, playing, url, index })
-      }
-      className={containerClasses}
-    >
-      <div className="col-span-1">{index + 1}</div>
-      <div className="col-span-4 flex flex-row items-center justify-start gap-2">
+    <div onClick={handleSongChange} className={containerClasses}>
+      <div className="col-span-1 ">
+        {isActive ? <Playing className="w-5 h-5" /> : index + 1}
+      </div>
+      <div className="col-span-3 flex flex-row items-center justify-start gap-2">
         <img src={imageURL} alt={title} className="w-10 h-10" />
-        {title.toString().length > 15
-          ? `${title.toString().substring(0, 15)}...`
+        {title.toString().length > 25
+          ? `${title.toString().substring(0, 25)}...`
           : title}
       </div>
-      <div className="col-span-2">{playing}</div>
-      <div className="col-span-2">{duration}</div>
-      <div className="col-span-3">{album}</div>
+      <div className="col-span-2 hidden md:block">{playing}</div>
+      <div className="col-span-1 hidden md:block">{duration}</div>
+      <div className="col-span-3">
+        {album.toString().length > 20
+          ? `${album.toString().substring(0, 20)}...`
+          : album}
+      </div>
     </div>
   );
 };

@@ -3,9 +3,9 @@ import ArtistBanner from "./svgs/Artist";
 
 const Herobar = () => {
   return (
-    <div className="flex flex-col items-center justify-center max-h-[400px] h-[350px] bg-transparent">
-      <ArtistBanner />
-    </div>
+    // <div className="flex flex-col items-center justify-center h-auto max-h-[600px] md:h-[300px] bg-transparent">
+    <ArtistBanner className="h-96" />
+    // </div>
   );
 };
 

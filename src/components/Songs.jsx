@@ -11,9 +11,11 @@ const Songs = () => {
 
   return (
     <div className="bg-transparent">
-      <div className="flex flex-row justify-between font-poppins text-lg font-bold text-[#CFC5C5] px-4">
-        <span>Popular</span>
-        <span>See All</span>
+      <div className="grid grid-cols-10 gap-4 font-poppins text-lg font-bold text-[#CFC5C5]">
+        <span className="col-span-2 text-right mr-10">Popular</span>
+        <span className="col-span-3"></span>
+        <span className="col-span-3"></span>
+        <span className="col-span-2 text-left">See All</span>
       </div>
       <SongList songs={songs} onSongReorder={onSongReorder} />
     </div>

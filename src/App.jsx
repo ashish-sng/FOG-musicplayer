@@ -5,13 +5,13 @@ import { Provider } from "./context/SongContext";
 
 function App() {
   return (
-    <Provider>
-      <div className="flex flex-row">
+    <div className="flex flex-row h-auto w-auto min-w-screen min-h-screen overflow-y-hidden">
+      <Provider>
         <Sidebar />
         <Main />
         <ActionArea />
-      </div>
-    </Provider>
+      </Provider>
+    </div>
   );
 }
 

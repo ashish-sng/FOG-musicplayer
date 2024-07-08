@@ -1,8 +1,8 @@
 import * as React from "react";
 const ArtistBanner = (props) => (
   <svg
-    width={882}
-    height={452}
+    // width={800}
+    // height={340}
     viewBox="0 0 882 452"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

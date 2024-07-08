@@ -1,10 +1,10 @@
 import React from "react";
 import { GENERAL, MENU } from "../assets/constant";
-import { Logo } from "./svgs/Logo";
+import Logo from "./svgs/Logo";
 
 const Sidebar = () => {
   return (
-    <div className="bg-black flex flex-col justify-between text-white w-100 p-8 h-screen">
+    <div className="bg-black flex flex-col justify-between items-start text-white w-[350px] p-8 h-auto">
       <div className="flex-col flex gap-10">
         <div className="flex flex-row items-center text-3xl gap-4">
           <Logo className="w-10 h-10" />

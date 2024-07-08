@@ -17,3 +17,12 @@ This is a Music Player App built with React and Howler.js for audio management. 
 - **Howler.js**: Audio library for managing playback.
 - **Tailwind CSS**: Utility-first CSS framework for styling.
 - **Context API**: For state management across the app.
+
+## Contributing
+Contributions are welcome! Please follow these steps:
+
+Fork the repository.
+Create a new branch: git checkout -b feature/your-feature-name.
+Make your changes and commit them: git commit -m 'Add some feature'.
+Push to the branch: git push origin feature/your-feature-name.
+Open a pull request.
